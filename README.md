@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Mechanic Backend
 
 A Node.js + Express.js + MySQL backend for a mechanics app. Supports user authentication, car part browsing, purchases, and saved parts.
@@ -107,3 +108,6 @@ curl http://localhost:5000/health
 - See `prisma/schema.prisma` for DB schema
 - CORS is enabled for web app integration
 - Health check available at `/health` 
+=======
+# backend_cars
+>>>>>>> 3ac04dc8af17b29c01f30a208417e0adac157397
