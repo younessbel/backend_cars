@@ -1,0 +1,57 @@
+// This is optional, for Prisma ORM users
+// Uncomment and use if you want to use Prisma instead of Sequelize
+//
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  full_name       String
+  email           String   @unique
+  password_hash   String
+  workshop_name   String?
+  phone           String?
+  city            String?
+  purchased_parts Json?
+  created_at      DateTime @default(now())
+  purchases       Purchase[]
+  savedParts      UserSavedPart[]
+  isAdmin         Boolean  @default(false)
+}
+
+model CarPart {
+  id               Int      @id @default(autoincrement())
+  brand_name       String
+  price            Decimal  @db.Decimal(10,2)
+  short_description String
+  thumbnail_url    String?
+  diagram_url      String?
+  created_at       DateTime @default(now())
+  purchases        Purchase[]
+  savedBy          UserSavedPart[]
+}
+
+model Purchase {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [user_id], references: [id])
+  user_id      Int
+  carPart      CarPart  @relation(fields: [car_part_id], references: [id])
+  car_part_id  Int
+  status       String
+  purchase_date DateTime @default(now())
+}
+
+model UserSavedPart {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     Int
+  carPart     CarPart  @relation(fields: [car_part_id], references: [id])
+  car_part_id Int
+  saved_at    DateTime @default(now())
+} 
